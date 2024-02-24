@@ -1,0 +1,22 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ejercicio1;
+
+public class HiloParImparEjecutar {
+    public static void main(String[] args) {
+        // Crear dos instancias de HiloParImpar con tipos diferentes
+        HiloParImpar hiloPar = new HiloParImpar(1);
+        HiloParImpar hiloImpar = new HiloParImpar(2);
+
+        // Crear dos hilos y pasarles las instancias de HiloParImpar
+        Thread threadPar = new Thread(hiloPar);
+        Thread threadImpar = new Thread(hiloImpar);
+
+        // Iniciar los hilos
+        threadPar.start();
+        threadImpar.start();
+    }
+}
+ 
