@@ -1,0 +1,74 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Random;
+
+public class JuegoServidor {
+    public static void main(String[] args) {
+        final int PUERTO = 12345;
+        int jugadoresConectados = 0;
+        int pidAveriguar = new Random().nextInt(Integer.MAX_VALUE); // Genera un número aleatorio (pid)
+
+        try {
+            ServerSocket serverSocket = new ServerSocket(PUERTO);
+            System.out.println("Servidor iniciado. Esperando a los jugadores...");
+            while (jugadoresConectados < 4) {
+                Socket clienteSocket = serverSocket.accept();
+                jugadoresConectados++;
+                System.out.println("Jugador " + jugadoresConectados + " conectado.");
+
+                // Inicia un nuevo hilo para manejar la conexión con el jugador
+                Thread jugadorThread = new JugadorThread(clienteSocket, pidAveriguar, jugadoresConectados);
+                jugadorThread.start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class JugadorThread extends Thread {
+    private Socket socket;
+    private int pidAveriguar;
+    private int jugadorNumero;
+
+    public JugadorThread(Socket socket, int pidAveriguar, int jugadorNumero) {
+        this.socket = socket;
+        this.pidAveriguar = pidAveriguar;
+        this.jugadorNumero = jugadorNumero;
+    }
+
+    public void run() {
+        try {
+            BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter salida = new PrintWriter(socket.getOutputStream(), true);
+
+            // Envía el mensaje al jugador indicando su número
+            salida.println("¡Bienvenido, eres el jugador " + jugadorNumero + "!");
+
+            String mensaje;
+            do {
+                // Lee el número enviado por el jugador
+                mensaje = entrada.readLine();
+                int numero = Integer.parseInt(mensaje);
+
+                // Comprueba si el número enviado es igual al pid a averiguar
+                if (numero == pidAveriguar) {
+                    salida.println("¡Felicidades! Has adivinado el PID.");
+                    break;
+                } else if (numero < pidAveriguar) {
+                    salida.println("El número que has ingresado es menor que el PID a averiguar.");
+                } else {
+                    salida.println("El número que has ingresado es mayor que el PID a averiguar.");
+                }
+            } while (true);
+
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
