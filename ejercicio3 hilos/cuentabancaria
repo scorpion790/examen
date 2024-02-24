@@ -1,0 +1,36 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ejercicio3;
+
+class CuentaBancaria {
+
+    private int saldo = 1000;
+
+     void sacarDinero(String nombre, int importe) {
+        if (importe > saldo) {
+            System.out.println("Saldo insuficiente");
+        } else {
+            saldo -= importe;
+            System.out.println(nombre + " retiró " + importe + ", saldo actual: " + saldo);
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+     void ingresarDinero(String nombre, int importe) {
+        saldo += importe;
+        System.out.println(nombre + " ingresó " + importe + ", saldo actual: " + saldo);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
