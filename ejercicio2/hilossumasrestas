@@ -1,0 +1,31 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ejercicio2;
+
+/**
+ *
+ * @author jorge
+ */
+public class HiloSumasRestasEjecutar {
+    public static void main(String[] args) {
+          HiloSumasRestas hilo1 = new HiloSumasRestas(100,"+");
+    HiloSumasRestas hilo2 = new HiloSumasRestas(100,"-");
+    HiloSumasRestas hilo3 = new HiloSumasRestas(1,"+");
+    HiloSumasRestas hilo4 = new HiloSumasRestas(1,"-");
+    
+    Thread thread1 = new Thread(hilo1);
+    Thread thread2 = new Thread(hilo2);
+    Thread thread3 = new Thread(hilo3);
+    Thread thread4 = new Thread(hilo4);
+
+        // Iniciar los hilos
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+    }
+  
+       
+}
