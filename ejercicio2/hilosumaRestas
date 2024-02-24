@@ -1,0 +1,54 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ejercicio2;
+
+/**
+ *
+ * @author jorge
+ */
+ class HiloSumasRestas implements Runnable {
+    private int numero=1000;
+    private String operador;
+    private int numveces;
+
+   public HiloSumasRestas (int numveces, String operacion)
+ {
+    this.numveces = numveces;
+    this.operador = operacion;
+ }
+   public int incrementar (int numveces)
+ {
+     int num = numero ;
+     for (int i = 0; i < numveces; i++) {
+         System.out.println("numero aumentado" + num );
+          num++;
+     }
+     numero=num;
+     return numero;
+ }
+   public int decrementar (int numveces)
+ {
+     int num = numero ;
+     for (int i = 0; i < numveces; i++) {
+          num--;
+          System.out.println("numero reducido" + num );
+     }
+     numero=num;
+     return numero;
+ }
+
+
+    public void run() {
+    
+      if(operador.equals("+"))
+       {
+       incrementar(numveces);
+      
+       }else if(operador.equals("-"))
+       {
+       decrementar(numveces);
+       }    
+    }
+}
